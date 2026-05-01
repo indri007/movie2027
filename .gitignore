@@ -1,0 +1,18 @@
+# Secrets
+.env
+.streamlit/secrets.toml
+token.json
+credentials.json
+chat_sessions.json
+.session_id
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# Streamlit
+.streamlit/secrets.toml

@@ -1,105 +1,154 @@
-import smtplib
-from email.mime.text import MIMEText
-from langchain_core.tools import tool
-from langgraph.prebuilt import create_react_agent
+"""
+superviser_workflow.py
+Supervisor multi-agent workflow untuk Personal AI Assistant.
+Mengkoordinasikan: weather_agent, imdb_agent, gmail_agent, dan RAG tool.
+"""
+
+import os
+from typing import Annotated
+from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
-from langgraph_supervisor import create_supervisor
-from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.messages import HumanMessage, AIMessage, convert_to_messages
+from langgraph.graph import StateGraph, START, MessagesState
+from langgraph.types import Command, Send
+from langgraph.prebuilt import create_react_agent, InjectedState
+from langchain_core.tools import tool
+
 from weather_agent import weather_agent
-from email_agent import email_agent
+from imdb_agent import imdb_agent
+from gmail_agent import gmail_agent
+from rag_tool import rag_search
 
+load_dotenv()
 
-# === LLM Setup ===
+# === LLM Supervisor ===
 llm = ChatOpenAI(
-    api_key="ollama",
-    model="qwen2.5-coder:32b",
-    base_url="",
+    model="gpt-4o-mini",
     temperature=0.1,
-    max_tokens=500,
+    max_tokens=1000,
 )
 
+SUPERVISOR_PROMPT = """Kamu adalah supervisor AI asisten pribadi yang cerdas dan membantu.
+Kamu mengelola tiga agent spesialis dan satu RAG tool:
+
+AGENT SPESIALIS:
+- weather_agent: Menangani semua pertanyaan tentang cuaca (suhu, kondisi, prakiraan)
+- imdb_agent: Menangani pencarian informasi film dan serial TV (rating, sutradara, sinopsis)
+- gmail_agent: Menangani email (kirim/baca) dan Google Calendar (buat/lihat acara)
+
+RAG TOOL:
+- rag_search: Mencari informasi dari knowledge base tentang fitur asisten dan informasi umum
+
+ATURAN DELEGASI:
+1. Analisis permintaan pengguna dan tentukan agent yang tepat.
+2. Untuk pertanyaan cuaca → delegasikan ke weather_agent.
+3. Untuk pertanyaan film/serial → delegasikan ke imdb_agent.
+4. Untuk email atau kalender → delegasikan ke gmail_agent.
+5. Untuk pertanyaan tentang fitur asisten atau informasi umum → gunakan rag_search langsung.
+6. Untuk tugas gabungan (misal: cek cuaca lalu kirim email) → jalankan secara berurutan.
+7. Jangan kerjakan sendiri tugas yang bisa didelegasikan ke agent spesialis.
+8. Setelah semua tugas selesai, rangkum hasilnya dengan ramah dalam Bahasa Indonesia.
+
+Selalu berkomunikasi dalam Bahasa Indonesia kecuali diminta sebaliknya.
+"""
 
 
-# === Supervisor Workflow ===
-workflow = create_supervisor(
-    [email_agent, weather_agent],
+def create_handoff_tool(agent_name: str, description: str):
+    """Membuat tool untuk mendelegasikan tugas ke agent tertentu."""
+
+    @tool(f"transfer_to_{agent_name}", description=description)
+    def handoff_tool(
+        task_description: Annotated[
+            str,
+            "Deskripsi tugas lengkap yang harus dikerjakan agent, termasuk semua konteks yang relevan.",
+        ],
+        state: Annotated[MessagesState, InjectedState],
+    ) -> Command:
+        task_message = {"role": "user", "content": task_description}
+        agent_input = {**state, "messages": [task_message]}
+        return Command(goto=[Send(agent_name, agent_input)], graph=Command.PARENT)
+
+    return handoff_tool
+
+
+# === Handoff Tools ===
+transfer_to_weather = create_handoff_tool(
+    "weather_agent",
+    "Delegasikan tugas terkait cuaca ke weather agent. Sertakan nama kota yang ingin dicek."
+)
+transfer_to_imdb = create_handoff_tool(
+    "imdb_agent",
+    "Delegasikan tugas pencarian film/serial TV ke IMDB agent. Sertakan judul atau kata kunci."
+)
+transfer_to_gmail = create_handoff_tool(
+    "gmail_agent",
+    "Delegasikan tugas email atau kalender ke Gmail agent. Sertakan detail lengkap (penerima, subjek, isi, atau detail acara)."
+)
+
+# === Supervisor Agent ===
+supervisor = create_react_agent(
     model=llm,
-    prompt=(
-        "You are a supervisor agent responsible for delegating tasks to two assistants:\n\n"
-        "- `weather_agent`: Handles weather-related queries (e.g., forecasts, current temperature, conditions).\n"
-        "- `email_agent`: Handles email-related tasks (e.g., sending emails using subject and body content).\n\n"
-        "Your job is to route each task to the correct agent **exactly once** per user request.\n"
-        "- Always call `weather_agent` first if weather information is needed, then pass the result to `email_agent` if email delivery is requested.\n"
-        "- When the user asks for weather and email, first get weather data from `weather_agent`, then pass that data to `email_agent` with instructions to include the weather details in the email body.\n"
-        "- Do not call both agents in parallel.\n"
-        "- Do not repeat or reroute the same task to an agent more than once.\n"
-        "- Do not perform any work yourself—only delegate.\n\n"
-        "For weather + email requests:\n"
-        "1. First call `weather_agent` to get weather data\n"
-        "2. Then call `email_agent` with the weather data included in the request\n"
-        "3. Stop after both tasks are completed.\n\n"
-        "Maintain clear, step-by-step task delegation and stop after both tasks are completed."
-    ),
-    add_handoff_back_messages=True,
-    output_mode="full_history",
+    tools=[transfer_to_weather, transfer_to_imdb, transfer_to_gmail, rag_search],
+    prompt=SUPERVISOR_PROMPT,
+    name="supervisor",
+)
+
+# === Build Workflow Graph ===
+workflow = (
+    StateGraph(MessagesState)
+    .add_node(supervisor, destinations=("weather_agent", "imdb_agent", "gmail_agent"))
+    .add_node(weather_agent)
+    .add_node(imdb_agent)
+    .add_node(gmail_agent)
+    .add_edge(START, "supervisor")
+    .add_edge("weather_agent", "supervisor")
+    .add_edge("imdb_agent", "supervisor")
+    .add_edge("gmail_agent", "supervisor")
+    .compile()
 )
 
 
-from langchain_core.messages import convert_to_messages
+def run_workflow(user_message: str, chat_history: list = None) -> str:
+    """
+    Menjalankan workflow supervisor dengan pesan pengguna dan riwayat chat.
+    
+    Args:
+        user_message: Pesan terbaru dari pengguna
+        chat_history: Daftar pesan sebelumnya [{"role": "user/assistant", "content": "..."}]
+    
+    Returns:
+        Respons terakhir dari supervisor sebagai string
+    """
+    messages = []
+
+    # Tambahkan chat history (maksimal 6 pesan terakhir = 3 percakapan)
+    if chat_history:
+        for msg in chat_history[-6:]:
+            if msg["role"] == "user":
+                messages.append(HumanMessage(content=msg["content"]))
+            elif msg["role"] == "assistant":
+                messages.append(AIMessage(content=msg["content"]))
+
+    # Tambahkan pesan terbaru
+    messages.append(HumanMessage(content=user_message))
+
+    result = workflow.invoke({"messages": messages})
+
+    # Ambil respons terakhir dari supervisor (AIMessage tanpa tool_calls)
+    final_messages = result.get("messages", [])
+    for msg in reversed(final_messages):
+        if (
+            isinstance(msg, AIMessage)
+            and msg.content
+            and not getattr(msg, "tool_calls", None)
+        ):
+            return msg.content
+
+    return "Maaf, saya tidak dapat memproses permintaan Anda saat ini."
 
 
-def pretty_print_message(message, indent=False):
-    pretty_message = message.pretty_repr(html=True)
-    if not indent:
-        print(pretty_message)
-        return
-
-    indented = "\n".join("\t" + c for c in pretty_message.split("\n"))
-    print(indented)
-
-
-def pretty_print_messages(update, last_message=False):
-    is_subgraph = False
-    if isinstance(update, tuple):
-        ns, update = update
-        # skip parent graph updates in the printouts
-        if len(ns) == 0:
-            return
-
-        graph_id = ns[-1].split(":")[0]
-        print(f"Update from subgraph {graph_id}:")
-        print("\n")
-        is_subgraph = True
-
-    for node_name, node_update in update.items():
-        update_label = f"Update from node {node_name}:"
-        if is_subgraph:
-            update_label = "\t" + update_label
-
-        print(update_label)
-        print("\n")
-
-        messages = convert_to_messages(node_update["messages"])
-        if last_message:
-            messages = messages[-1:]
-
-        for m in messages:
-            pretty_print_message(m, indent=is_subgraph)
-        print("\n")
-# Compile the workflow
-app = workflow.compile()
-
-# === Run Test ===
-for chunk in app.stream(
-    {
-        "messages": [
-            {
-                "role": "user",
-                "content": "query",
-            }
-        ]
-    },
-):
-    pretty_print_messages(chunk, last_message=True)
-
-final_message_history = chunk["supervisor"]["messages"]
+if __name__ == "__main__":
+    # Test sederhana
+    print("=== Test Supervisor Workflow ===\n")
+    response = run_workflow("Bagaimana cuaca di Jakarta hari ini?")
+    print(f"Response: {response}")
