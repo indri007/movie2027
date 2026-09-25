@@ -1,23 +1,6 @@
-keyword,jenis,genre,tahun_rilis,platform
-film horor,genre,horor,,
-film komedi,genre,komedi,,
-film drama,genre,drama,,
-film animasi,genre,animasi,,
-film action,genre,aksi,,
-film religi,genre,religi,,
-film romantis,genre,romantis,,
-netflix,platform,,,netflix
-jadwal bioskop,platform,,,bioskop
-KKN di Desa Penari,judul,horor,2022,bioskop
-Pengabdi Setan 2,judul,horor,2022,bioskop
-Miracle in Cell No. 7,judul,drama,2022,bioskop
-Sewu Dino,judul,horor,2023,bioskop
-Agak Laen,judul,komedi,2024,bioskop
-Vina: Sebelum 7 Hari,judul,horor,2024,bioskop
-Siksa Kubur,judul,horor,2024,bioskop
-Ipar Adalah Maut,judul,drama,2024,bioskop
-Kang Mak,judul,komedi,2024,bioskop
-The Shadow Strays,judul,aksi,2024,netflix
-Jumbo,judul,animasi,2025,bioskop
-Pabrik Gula,judul,horor,2025,bioskop
-The Most Beautiful Girl in the World,judul,romantis,2025,netflix
+keyword,jenis,genre
+film indonesia,baseline,all
+film horor indonesia,genre,horor
+film komedi indonesia,genre,komedi
+film drama indonesia,genre,drama
+film animasi indonesia,genre,animasi
