@@ -7,10 +7,10 @@ DATA_FILE = pathlib.Path("data/raw/movies/indonesian_movies_dataset.csv")
 
 df_exist = pd.read_csv(DATA_FILE)
 exist_count = len(df_exist)
-target_count = 25000
+target_count = 51000
 needed = target_count - exist_count
 
-print(f"Dataset saat ini: {exist_count} data. Menambahkan {needed} film baru menuju total 25.000 data...")
+print(f"Dataset saat ini: {exist_count} data. Menambahkan {needed} film baru menuju total 51.000 data...")
 
 directors = [
     "Joko Anwar", "Hanung Bramantyo", "Riri Riza", "Awi Suryadi", "Kimo Stamboel", 
@@ -22,7 +22,7 @@ directors = [
     "Ifa Isfansyah", "Garin Nugroho", "Teddy Soeriaatmadja", "Lucky Kuswandi", "Edwin",
     "Danial Rifki", "Herwin Novianto", "Viva Westi", "Guntur Soeharjanto", "Key Mangunsong",
     "Robvy Ertanto", "Yosep Anggi Noen", "Ginanti Rona", "Tommy Dewo", "Paul Agusta",
-    "Sartri Dania Sulfiati", "Aryanto Yuniawan", "Faza Meonk", "Bony Wirasmono"
+    "Sartri Dania Sulfiati", "Aryanto Yuniawan", "Faza Meonk", "Bony Wirasmono", "Ismail Basbeth"
 ]
 
 actors_pool = [
@@ -40,40 +40,40 @@ actors_pool = [
 genre_choices = ["Horor", "Drama", "Komedi", "Romantis", "Action", "Religi", "Animasi", "Thriller"]
 genre_weights = [0.38, 0.22, 0.16, 0.10, 0.06, 0.04, 0.02, 0.02]
 
-horror_prefixes = ["Kutukan", "Teror", "Misteri", "Arwah", "Tumbal", "Ritual", "Santet", "Pesugihan", "Jeritan", "Dendam", "Hantu", "Kematian", "Perjanjian", "Penglaris", "Bisikan", "Bayangan", "Jejak", "Gerbang", "Jerat", "Tangisan", "Langkah", "Penunggu"]
-horror_locations = ["Alas", "Desa", "Kamar", "Makam", "Lembah", "Pabrik", "Rumah", "Danau", "Sekolah", "Asrama", "Gua", "Hutan", "Pantai", "Klinik", "Sumur", "Jembatan", "Lorong", "Gedung", "Kampus", "Pondok", "Bukit", "Muara", "Rumah Susun"]
-horror_nouns = ["Keramat", "Terkutuk", "Berdarah", "Kegelapan", "Maut", "Iblis", "Hitam", "Gaib", "Kuno", "Menjelang Fajar", "Leluhur", "Jahanam", "Kafir", "Tengah Malam", "Merah", "Tanpa Rupa", "Sembilan Malam", "Tak Kasat Mata", "Seribu Jiwa"]
+horror_prefixes = ["Kutukan", "Teror", "Misteri", "Arwah", "Tumbal", "Ritual", "Santet", "Pesugihan", "Jeritan", "Dendam", "Hantu", "Kematian", "Perjanjian", "Penglaris", "Bisikan", "Bayangan", "Jejak", "Gerbang", "Jerat", "Tangisan", "Langkah", "Penunggu", "Petaka", "Sumpah"]
+horror_locations = ["Alas", "Desa", "Kamar", "Makam", "Lembah", "Pabrik", "Rumah", "Danau", "Sekolah", "Asrama", "Gua", "Hutan", "Pantai", "Klinik", "Sumur", "Jembatan", "Lorong", "Gedung", "Kampus", "Pondok", "Bukit", "Muara", "Rumah Susun", "Perkebunan", "Pulau"]
+horror_nouns = ["Keramat", "Terkutuk", "Berdarah", "Kegelapan", "Maut", "Iblis", "Hitam", "Gaib", "Kuno", "Menjelang Fajar", "Leluhur", "Jahanam", "Kafir", "Tengah Malam", "Merah", "Tanpa Rupa", "Sembilan Malam", "Tak Kasat Mata", "Seribu Jiwa", "Malam Jumat", "Tanpa Kepala"]
 
-comedy_words = ["Kacau", "Bikin Ribet", "Salah Tangkap", "Mendadak Bos", "Geng", "Jodoh Nyasar", "Ngenes", "Gokil", "Cari Untung", "Mertua Galak", "Piknik Bencana", "Modal Nekat", "Jomblo Akut", "Juragan", "Pusing Tujuh Keliling", "Sultan Kampung", "Salah Alamat", "Keluarga Sableng", "Apes Berat"]
-drama_words = ["Pelukan", "Rintangan", "Harapan", "Jejak", "Lentera", "Janji", "Duka", "Melodi", "Surat", "Batas", "Senja", "Luka", "Kepingan", "Rindu", "Cahaya", "Pelabuhan", "Suara", "Bintang", "Ruang", "Kenangan", "Gerimis", "Lembayung", "Cakrawala"]
-action_words = ["Operasi Gagak", "Serigala Malam", "Garis Depan", "Target Buron", "Darah Pembalasan", "Bayang Baja", "Dendam Hitam", "Serangan Balik", "Konspirasi 88", "Benteng Terakhir", "Sandi Naga", "Pemburu Bayangan", "Misi Garuda", "Mata Rantai", "Detik Menegangkan", "Mandat Baja"]
+comedy_words = ["Kacau", "Bikin Ribet", "Salah Tangkap", "Mendadak Bos", "Geng", "Jodoh Nyasar", "Ngenes", "Gokil", "Cari Untung", "Mertua Galak", "Piknik Bencana", "Modal Nekat", "Jomblo Akut", "Juragan", "Pusing Tujuh Keliling", "Sultan Kampung", "Salah Alamat", "Keluarga Sableng", "Apes Berat", "Cuan Melayang", "Dilema Bujang"]
+drama_words = ["Pelukan", "Rintangan", "Harapan", "Jejak", "Lentera", "Janji", "Duka", "Melodi", "Surat", "Batas", "Senja", "Luka", "Kepingan", "Rindu", "Cahaya", "Pelabuhan", "Suara", "Bintang", "Ruang", "Kenangan", "Gerimis", "Lembayung", "Cakrawala", "Permata", "Pagi Buta"]
+action_words = ["Operasi Gagak", "Serigala Malam", "Garis Depan", "Target Buron", "Darah Pembalasan", "Bayang Baja", "Dendam Hitam", "Serangan Balik", "Konspirasi 88", "Benteng Terakhir", "Sandi Naga", "Pemburu Bayangan", "Misi Garuda", "Mata Rantai", "Detik Menegangkan", "Mandat Baja", "Serbuan Kilat", "Kobra Merah"]
 
 used_titles = set(df_exist["title"].tolist())
 new_rows = []
-rng = np.random.default_rng(2028)
+rng = np.random.default_rng(2029)
 
 for i in range(needed):
     genre = random.choices(genre_choices, weights=genre_weights)[0]
     year = int(rng.integers(2000, 2027))
-    idx_code = i + 1
+    idx_code = exist_count + i + 1
     
     if genre == "Horor" or genre == "Thriller":
         title = f"{random.choice(horror_prefixes)} {random.choice(horror_locations)} {random.choice(horror_nouns)}"
     elif genre == "Komedi":
-        title = f"{random.choice(comedy_words)} {random.choice(['Abis', 'Total', 'Keluarga', 'Santuy', 'Season', 'Part 2', 'Lagi', 'Bikin Pusing', 'Gila-Gilaan', 'Hore', 'Mantap', 'Jilid 2'])}"
+        title = f"{random.choice(comedy_words)} {random.choice(['Abis', 'Total', 'Keluarga', 'Santuy', 'Season', 'Part 2', 'Lagi', 'Bikin Pusing', 'Gila-Gilaan', 'Hore', 'Mantap', 'Jilid 2', 'Edisi Mudik'])}"
     elif genre == "Action":
-        title = f"{random.choice(action_words)} {random.choice(['Merah', 'Darah', 'Jakarta', 'Khatulistiwa', '24 Jam', 'Terakhir', 'Sektor 9', 'Protokol', 'Nusantara', 'Ultimatum'])}"
+        title = f"{random.choice(action_words)} {random.choice(['Merah', 'Darah', 'Jakarta', 'Khatulistiwa', '24 Jam', 'Terakhir', 'Sektor 9', 'Protokol', 'Nusantara', 'Ultimatum', 'Level Max'])}"
     elif genre == "Animasi":
         title = f"Petualangan {random.choice(['Kancil', 'Garuda Cilik', 'Bintang Kejora', 'Si Bolang', 'Timun Mas', 'Rimbaraya', 'Satria Cilik', 'Pendekar Cilik'])} #{idx_code}"
     else:
-        title = f"{random.choice(drama_words)} di {random.choice(['Ujung Musim', 'Batas Kota', 'Bumi Rafflesia', 'Sudut Ibu Kota', 'Bawah Langit', 'Antara Dua Hati', 'Balik Jendela', 'Lembah Hijau', 'Pesisir Selatan', 'Kala Hujan'])}"
+        title = f"{random.choice(drama_words)} di {random.choice(['Ujung Musim', 'Batas Kota', 'Bumi Rafflesia', 'Sudut Ibu Kota', 'Bawah Langit', 'Antara Dua Hati', 'Balik Jendela', 'Lembah Hijau', 'Pesisir Selatan', 'Kala Hujan', 'Tanah Rencong'])}"
     
     if title in used_titles:
         title = f"{title} #{idx_code}"
         
     used_titles.add(title)
 
-    # Distribusi realistis audiens
+    # Distribusi realistis penonton & rating
     if genre == "Horor":
         aud = int(np.clip(rng.lognormal(mean=13.1, sigma=0.85), 20000, 6800000))
         rating = round(float(rng.normal(6.1, 0.65)), 1)
