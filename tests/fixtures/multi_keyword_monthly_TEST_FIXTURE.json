@@ -1,0 +1,45 @@
+[
+  {
+    "inputUrlOrTerm": "film komedi Indonesia, film drama Indonesia, film animasi Indonesia",
+    "searchTerm": "film komedi Indonesia, film drama Indonesia, film animasi Indonesia",
+    "geo": "ID",
+    "interestOverTime_timelineData": [
+      {
+        "time": "1072915200",
+        "formattedTime": "Jan 2004",
+        "formattedAxisTime": "Jan 2004",
+        "value": [12, 25, 4],
+        "hasData": [true, true, true]
+      },
+      {
+        "time": "1075593600",
+        "formattedTime": "Feb 2004",
+        "formattedAxisTime": "Feb 2004",
+        "value": [15, 30, 6],
+        "hasData": [true, true, true]
+      },
+      {
+        "time": "1078099200",
+        "formattedTime": "Mar 2004",
+        "formattedAxisTime": "Mar 2004",
+        "value": [18, 28, 5],
+        "hasData": [true, true, true]
+      },
+      {
+        "time": "1080777600",
+        "formattedTime": "Apr 2004",
+        "formattedAxisTime": "Apr 2004",
+        "value": [10, 20, 2],
+        "hasData": [true, true, true],
+        "isPartial": true
+      }
+    ],
+    "interestBySubregion": [
+      {
+        "geoCode": "ID-JK",
+        "geoName": "Jakarta",
+        "value": [100, 80, 50]
+      }
+    ]
+  }
+]

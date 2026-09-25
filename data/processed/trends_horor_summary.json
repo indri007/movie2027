@@ -1,0 +1,166 @@
+{
+  "keyword": "film horor Indonesia",
+  "total_weeks": 52,
+  "date_range": "2025-09-21 s/d 2026-09-13",
+  "mean_interest": 65.12,
+  "median_interest": 66.0,
+  "min_interest": 44,
+  "max_interest": 100,
+  "monthly_pattern": {
+    "2025-09": {
+      "weeks_count": 2,
+      "mean_interest": 68.5,
+      "min_interest": 67,
+      "max_interest": 70
+    },
+    "2025-10": {
+      "weeks_count": 4,
+      "mean_interest": 69.25,
+      "min_interest": 66,
+      "max_interest": 71
+    },
+    "2025-11": {
+      "weeks_count": 5,
+      "mean_interest": 67.0,
+      "min_interest": 59,
+      "max_interest": 72
+    },
+    "2025-12": {
+      "weeks_count": 4,
+      "mean_interest": 82.5,
+      "min_interest": 70,
+      "max_interest": 100
+    },
+    "2026-01": {
+      "weeks_count": 4,
+      "mean_interest": 70.0,
+      "min_interest": 64,
+      "max_interest": 78
+    },
+    "2026-02": {
+      "weeks_count": 4,
+      "mean_interest": 65.25,
+      "min_interest": 62,
+      "max_interest": 74
+    },
+    "2026-03": {
+      "weeks_count": 5,
+      "mean_interest": 70.6,
+      "min_interest": 51,
+      "max_interest": 95
+    },
+    "2026-04": {
+      "weeks_count": 4,
+      "mean_interest": 62.5,
+      "min_interest": 60,
+      "max_interest": 65
+    },
+    "2026-05": {
+      "weeks_count": 5,
+      "mean_interest": 63.2,
+      "min_interest": 59,
+      "max_interest": 66
+    },
+    "2026-06": {
+      "weeks_count": 4,
+      "mean_interest": 65.5,
+      "min_interest": 56,
+      "max_interest": 70
+    },
+    "2026-07": {
+      "weeks_count": 4,
+      "mean_interest": 59.25,
+      "min_interest": 53,
+      "max_interest": 67
+    },
+    "2026-08": {
+      "weeks_count": 5,
+      "mean_interest": 50.0,
+      "min_interest": 44,
+      "max_interest": 59
+    },
+    "2026-09": {
+      "weeks_count": 2,
+      "mean_interest": 49.0,
+      "min_interest": 46,
+      "max_interest": 52
+    }
+  },
+  "top_5_peaks": [
+    {
+      "rank": 1,
+      "date": "2025-12-28",
+      "interest": 100,
+      "matched_film_releases": "not available"
+    },
+    {
+      "rank": 2,
+      "date": "2026-03-22",
+      "interest": 95,
+      "matched_film_releases": "not available"
+    },
+    {
+      "rank": 3,
+      "date": "2025-12-21",
+      "interest": 87,
+      "matched_film_releases": "not available"
+    },
+    {
+      "rank": 4,
+      "date": "2026-03-15",
+      "interest": 81,
+      "matched_film_releases": "not available"
+    },
+    {
+      "rank": 5,
+      "date": "2026-01-11",
+      "interest": 78,
+      "matched_film_releases": "not available"
+    }
+  ],
+  "peak_periods_clustered": [
+    {
+      "period": "2025-12-21 s/d 2025-12-28",
+      "weeks_included": 2,
+      "max_interest_in_period": 100
+    },
+    {
+      "period": "2026-01-11",
+      "weeks_included": 1,
+      "max_interest_in_period": 78
+    },
+    {
+      "period": "2026-03-15 s/d 2026-03-22",
+      "weeks_included": 2,
+      "max_interest_in_period": 95
+    }
+  ],
+  "trend_comparison": {
+    "ols_standard": {
+      "slope": -0.3919,
+      "intercept": 75.11,
+      "std_error": 0.0871,
+      "t_stat": -4.5,
+      "p_value": 4.1e-05,
+      "r_squared": 0.2883
+    },
+    "ols_newey_west_hac_lag4": {
+      "slope": -0.3919,
+      "intercept": 75.11,
+      "std_error": 0.1052,
+      "t_stat": -3.726,
+      "p_value": 0.000195,
+      "r_squared": 0.2883
+    },
+    "mann_kendall_test": {
+      "trend": "decreasing",
+      "h": true,
+      "p_value": 1.2e-05,
+      "z_stat": -4.386,
+      "tau": -0.4193,
+      "sen_slope": -0.356
+    }
+  },
+  "methodological_caution": "CATATAN INTERPRETASI HATI-HATI (METHODOLOGICAL LIMITATION): Meskipun model OLS standar, OLS Newey-West (HAC lag=4), dan uji non-parametrik Mann-Kendall sama-sama mengindikasikan penurunan signifikan (slope: -0.3919, MK p=0.00001), rentang waktu 52 minggu (1 tahun) SECARA METODOLOGIS TIDAK CUKUP untuk memisahkan antara tren sekuler jangka panjang dan fluktuasi musiman tahunan (seasonal variation). Penurunan di paruh kedua dapat merefleksikan fase pasca-liburan atau pergeseran kalender rilis film horor nasional, bukan pelemahan minat permanen.",
+  "movie_cross_reference_status": "not available. Kolom yang tersedia di data/processed/movies_clean.csv: ['title', 'year', 'genre', 'rating', 'vote_count', 'audience', 'director', 'cast', 'overview']. Kolom spesifik tanggal rilis presisi mingguan dan bahasa tidak tersedia di skema dataset film saat ini."
+}

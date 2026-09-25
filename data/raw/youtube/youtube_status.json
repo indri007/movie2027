@@ -1,0 +1,11 @@
+{
+  "status": "NOT_RUN",
+  "reason": "YouTube collection is not executed until the existing scraper/API capability is verified. No synthetic data is created.",
+  "required_keywords": [
+    "film Indonesia",
+    "film horor Indonesia",
+    "film komedi Indonesia",
+    "film drama Indonesia",
+    "film animasi Indonesia"
+  ]
+}

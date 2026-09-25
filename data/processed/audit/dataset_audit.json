@@ -1,0 +1,34 @@
+{
+  "timestamp_utc": "2026-09-25T04:53:21.006178+00:00",
+  "source": "data/raw/movies/indonesian_movies_dataset.csv",
+  "master": "data/processed/movies_master.csv",
+  "rows": 100000,
+  "unique_titles": 99994,
+  "columns": [
+    "title",
+    "year",
+    "genre",
+    "rating",
+    "vote_count",
+    "audience",
+    "director",
+    "cast",
+    "overview"
+  ],
+  "year_min": 2000,
+  "year_max": 2026,
+  "missing_values": {
+    "title": 0,
+    "year": 0,
+    "genre": 0,
+    "rating": 0,
+    "vote_count": 0,
+    "audience": 0,
+    "director": 0,
+    "cast": 0,
+    "overview": 0
+  },
+  "duplicate_title_count": 6,
+  "duplicate_title_year_count": 0,
+  "missing_required_columns": []
+}

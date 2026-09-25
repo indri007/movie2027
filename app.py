@@ -70,11 +70,11 @@ if "messages" not in st.session_state:
 with st.sidebar:
     st.header("🛠️ Kemampuan Asisten")
 
-    st.markdown("**🌤️ Cuaca**")
-    st.markdown('<div class="capability-card">Cek cuaca real-time di kota manapun</div>', unsafe_allow_html=True)
-
     st.markdown("**🎬 Film & Serial**")
     st.markdown('<div class="capability-card">Cari info film, rating IMDb, sinopsis</div>', unsafe_allow_html=True)
+
+    st.markdown("**🌤️ Cuaca**")
+    st.markdown('<div class="capability-card">Cek cuaca real-time di kota manapun</div>', unsafe_allow_html=True)
 
     st.markdown("**📧 Gmail**")
     st.markdown('<div class="capability-card">Kirim & baca email via Gmail</div>', unsafe_allow_html=True)

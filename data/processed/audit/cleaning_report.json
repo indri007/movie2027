@@ -1,0 +1,32 @@
+{
+  "timestamp_utc": "2026-09-25T04:53:21.459300+00:00",
+  "source": "/Users/jevin/Documents/Capstone 3/data/processed/movies_master.csv",
+  "output": "/Users/jevin/Documents/Capstone 3/data/processed/movies_clean.csv",
+  "original_rows": 100000,
+  "clean_rows": 100000,
+  "rows_removed": 0,
+  "duplicate_title_year_found": 0,
+  "columns": [
+    "title",
+    "year",
+    "genre",
+    "rating",
+    "vote_count",
+    "audience",
+    "director",
+    "cast",
+    "overview"
+  ],
+  "missing_values_after_cleaning": {
+    "title": 0,
+    "year": 0,
+    "genre": 0,
+    "rating": 0,
+    "vote_count": 0,
+    "audience": 0,
+    "director": 0,
+    "cast": 0,
+    "overview": 0
+  },
+  "note": "No values were fabricated or imputed. Rows were not removed because rating/audience/etc. were missing."
+}

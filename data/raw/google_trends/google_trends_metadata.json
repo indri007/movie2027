@@ -1,0 +1,18 @@
+{
+  "status": "OFFICIAL_DATA_PARSED",
+  "keywords": [
+    "film horor Indonesia"
+  ],
+  "geo": "ID",
+  "geo_source": "inferred_from_subregion_codes",
+  "sample_subregions": [
+    "ID-MA",
+    "ID-JI",
+    "ID-JB"
+  ],
+  "granularity": "weekly",
+  "timeframe": "2025-09-21 to 2026-09-13",
+  "total_observations": 52,
+  "excluded_partial_points": 1,
+  "collection_timestamp_utc": "2026-09-25T05:47:56.062366+00:00"
+}

@@ -1,0 +1,56 @@
+{
+  "timestamp_utc": "2026-09-25T05:48:10.621265+00:00",
+  "file": "data/raw/google_trends/google_trends_film_horor_indonesia_2025_2026.csv",
+  "status": "PASS_PARTIAL_SCOPE",
+  "expected_keywords": [
+    "film Indonesia",
+    "film horor Indonesia",
+    "film komedi Indonesia",
+    "film drama Indonesia",
+    "film animasi Indonesia"
+  ],
+  "total_rows": 52,
+  "columns": [
+    "date",
+    "keyword",
+    "interest",
+    "geo",
+    "source",
+    "granularity"
+  ],
+  "actual_keywords": [
+    "film horor Indonesia"
+  ],
+  "actual_keyword_count": 1,
+  "missing_expected_keywords": [
+    "film Indonesia",
+    "film komedi Indonesia",
+    "film drama Indonesia",
+    "film animasi Indonesia"
+  ],
+  "date_min": "2025-09-21",
+  "date_max": "2026-09-13",
+  "timeframe_nature": "weekly_52_obs",
+  "granularity": "weekly",
+  "geo_stated": "ID",
+  "geo_source": "inferred_from_subregion_codes",
+  "sample_subregion_codes": [
+    "ID-MA",
+    "ID-JI",
+    "ID-JB"
+  ],
+  "observations_per_keyword": {
+    "film horor Indonesia": 52
+  },
+  "missing_values": {
+    "date": 0,
+    "keyword": 0,
+    "interest": 0,
+    "geo": 0,
+    "source": 0,
+    "granularity": 0
+  },
+  "invalid_interest_count": 0,
+  "duplicate_date_keyword_count": 0,
+  "audit_note": "Dataset mencakup 52 observasi weekly penuh (titik minggu parsial isPartial=true telah diexclude). Geo teridentifikasi dari subregion codes ('inferred_from_subregion_codes')."
+}
